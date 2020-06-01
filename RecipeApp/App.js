@@ -1,10 +1,26 @@
+import 'react-native-gesture-handler';
 import React from 'react';
-import { View, Text, SafeAreaView } from 'react-native';
-import SearchRecipe from './screens/SearchRecipes';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Home from './screens/Home';
+import RecipeDetails from './screens/RecipeDetails';
+
+const Stack = createStackNavigator();
+
+const MainStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="RecipeDetails" component={RecipeDetails} />
+    </Stack.Navigator>
+  );
+};
 
 const App = () => {
   return (
-    <SearchRecipe />
+    <NavigationContainer>
+      <MainStack />
+    </NavigationContainer>
   );
 };
 

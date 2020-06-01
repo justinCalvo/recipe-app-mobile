@@ -6,22 +6,27 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  Button,
 } from 'react-native';
 import config from '../config.js';
 import SearchFeed from '../components/SearchFeed';
 
-const SearchRecipes = () => {
+const Home = () => {
   const [recipes, setRecipes] = useState([]);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState('smoothie');
   const [search, setSearch] = useState('');
+  const [viewMore, setViewMore] = useState(false);
 
   const getRecipes = useCallback(async () => {
     const results = await fetch(
-      // eslint-disable-next-line prettier/prettier
-      `https://api.edamam.com/search?q=${query}&app_id=${config.API_ID}&app_key=${config.API_KEY}`,
+      `https://api.edamam.com/search?q=${query}&app_id=${
+        config.API_ID
+      }&app_key=${config.API_KEY}`,
     );
-    const response = await results.json();
-    setRecipes(response.hits);
+    if (results.ok) {
+      const response = await results.json();
+      setRecipes(response.hits);
+    }
   }, [query]);
 
   useEffect(() => {
@@ -32,15 +37,12 @@ const SearchRecipes = () => {
   const handleSearch = e => {
     e.preventDefault();
     setQuery(search);
+    setViewMore(false);
     setSearch('');
   };
 
-  console.log(recipes);
-  console.log('query: ', query);
-  console.log('search: ', search);
-
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
       <View>
         <TextInput
           style={styles.input}
@@ -50,7 +52,16 @@ const SearchRecipes = () => {
         <TouchableOpacity onPress={handleSearch}>
           <Text>Search</Text>
         </TouchableOpacity>
-        <SearchFeed recipes={recipes} />
+        {viewMore ? (
+          <SearchFeed recipes={recipes} />
+        ) : (
+          <SearchFeed recipes={recipes.slice(0, 5)} />
+        )}
+        {!viewMore ? (
+          <View style={styles.button}>
+            <Button title="View More" onPress={() => setViewMore(true)} />
+          </View>
+        ) : null}
       </View>
     </SafeAreaView>
   );
@@ -62,6 +73,12 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     fontSize: 18,
   },
+  button: {
+    paddingTop: 20,
+  },
+  container: {
+    backgroundColor: 'white',
+  },
 });
 
-export default SearchRecipes;
+export default Home;
