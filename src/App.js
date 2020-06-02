@@ -7,11 +7,16 @@ import RecipeDetails from './screens/RecipeDetails';
 
 const Stack = createStackNavigator();
 
+export class Routes {
+  static Home = 'Home';
+  static RecipeDetails = 'RecipeDetails';
+}
+
 const MainStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="RecipeDetails" component={RecipeDetails} />
+      <Stack.Screen name={Routes.Home} component={Home} />
+      <Stack.Screen name={Routes.RecipeDetails} component={RecipeDetails} />
     </Stack.Navigator>
   );
 };
