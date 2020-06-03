@@ -10,6 +10,7 @@ import {
 
 const RecipeDetails = ({ route }) => {
   const { calories, image, ingredientLines, label } = route.params;
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.center}>

@@ -1,11 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import { View, TextInput, StyleSheet } from 'react-native';
 import config from '../../config.js';
 import ViewMoreButton from '../components/ViewMoreButton';
 
@@ -32,11 +26,15 @@ const SearchBar = () => {
   }, []);
 
   return (
-    <View>
-      <TextInput style={styles.input} onChangeText={setQuery} value={query} />
-      <TouchableOpacity onPress={getRecipes}>
-        <Text>Search</Text>
-      </TouchableOpacity>
+    <View style={styles.container}>
+      <TextInput
+        style={styles.input}
+        placeholder="Search recipes..."
+        returnKeyType="search"
+        value={query}
+        onChangeText={setQuery}
+        onSubmitEditing={getRecipes}
+      />
       <ViewMoreButton recipes={recipes} />
     </View>
   );
@@ -47,6 +45,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     fontSize: 18,
+    paddingVertical: 10,
+    marginBottom: 20,
+  },
+  container: {
+    paddingHorizontal: 5,
   },
 });
 

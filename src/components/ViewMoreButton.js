@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Button, StyleSheet } from 'react-native';
 import SearchFeed from './SearchFeed';
 
 const ViewMoreButton = ({ recipes }) => {
   const [viewMore, setViewMore] = useState(false);
 
+  useEffect(() => {
+    setViewMore(false);
+  }, [recipes]);
+
   return (
-    <View>
+    <View style={styles.container}>
       {viewMore ? (
         <SearchFeed recipes={recipes} />
       ) : (
@@ -24,6 +28,9 @@ const ViewMoreButton = ({ recipes }) => {
 const styles = StyleSheet.create({
   button: {
     paddingTop: 20,
+  },
+  container: {
+    paddingBottom: 150,
   },
 });
 
