@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
+import axios from 'axios';
 import config from '../../config.js';
 import ViewMoreButton from '../components/ViewMoreButton';
 
@@ -7,16 +8,17 @@ const SearchBar = () => {
   const [recipes, setRecipes] = useState([]);
   const [query, setQuery] = useState('smoothie');
 
-  const getRecipes = useCallback(async () => {
-    const results = await fetch(
-      `https://api.edamam.com/search?q=${query}&app_id=${
-        config.API_ID
-      }&app_key=${config.API_KEY}`,
-    );
-    if (results.ok) {
-      const response = await results.json();
-      setRecipes(response.hits);
-    }
+  const getRecipes = useCallback(() => {
+    axios
+      .get(
+        `https://api.edamam.com/search?q=${query}&app_id=${
+          config.API_ID
+        }&app_key=${config.API_KEY}`,
+      )
+      .then(recipeResults => {
+        setRecipes(recipeResults.data.hits);
+      })
+      .catch(err => console.error(err));
     setQuery('');
   }, [query]);
 

@@ -1,9 +1,26 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import React, { useState, useCallback, useEffect } from 'react';
+import { View, Text, TextInput, StyleSheet, Button, Alert } from 'react-native';
+import PostSignUp from '../components/PostSignUp';
 
 const SignUp = ({ navigation }) => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [first_name, setFirst_Name] = useState('');
+  const [last_name, setLast_Name] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [toggleButton, setToggleButton] = useState(false);
+
+  const comparePasswords = useCallback(() => {
+    if (password === confirmPassword && password.length > 0) {
+      setToggleButton(true);
+    } else {
+      setToggleButton(false);
+    }
+  }, [password, confirmPassword]);
+
+  useEffect(() => {
+    comparePasswords();
+  }, [password, confirmPassword, comparePasswords]);
 
   return (
     <View style={styles.container}>
@@ -11,18 +28,58 @@ const SignUp = ({ navigation }) => {
         <Text style={styles.title}>Sign Up Here!</Text>
         <TextInput
           style={styles.input}
-          placeholder="Username..."
-          value={username}
-          onChangeText={setUsername}
+          placeholder="Email..."
+          value={email}
+          onChangeText={setEmail}
+          returnKeyType="next"
+          autoCorrect={false}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="First Name..."
+          value={first_name}
+          onChangeText={setFirst_Name}
+          returnKeyType="next"
+          autoCorrect={false}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Last Name..."
+          value={last_name}
+          onChangeText={setLast_Name}
+          returnKeyType="next"
+          autoCorrect={false}
         />
         <TextInput
           style={styles.input}
           placeholder="Password..."
           value={password}
           onChangeText={setPassword}
-          returnKeyType="done"
-          onSubmitEditing={() => navigation.navigate('Search')}
+          returnKeyType="next"
+          autoCorrect={false}
         />
+        <TextInput
+          style={styles.input}
+          placeholder="Confirm Password..."
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          returnKeyType="done"
+          autoCorrect={false}
+        />
+        {toggleButton ? (
+          <PostSignUp
+            email={email}
+            first_name={first_name}
+            last_name={last_name}
+            password={password}
+            confirmPassword={confirmPassword}
+          />
+        ) : (
+          <Button
+            title="Sign Up!"
+            onPress={() => Alert.alert('Password must match')}
+          />
+        )}
       </View>
     </View>
   );
@@ -40,7 +97,7 @@ const styles = StyleSheet.create({
     paddingVertical: 50,
   },
   input: {
-    borderWidth: 1,
+    borderBottomWidth: 1,
     borderColor: 'black',
     fontSize: 18,
     paddingVertical: 10,
