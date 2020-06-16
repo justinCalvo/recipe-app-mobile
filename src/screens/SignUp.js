@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import Validation from '../components/Validation';
+import NewUserForm from '../components/NewUserForm';
 
 const SignUp = () => {
   return (
     <View style={styles.container}>
-      <Validation />
+      <NewUserForm />
     </View>
   );
 };
