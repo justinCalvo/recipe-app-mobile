@@ -1,15 +1,9 @@
 import React, { useCallback } from 'react';
-import { View, Button } from 'react-native';
+import { View, Button, Alert } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 
-const PostSignUp = ({
-  email,
-  first_name,
-  last_name,
-  password,
-  confirmPassword,
-}) => {
+const NewUser = ({ email, first_name, last_name, password }) => {
   const navigation = useNavigation();
 
   const handleSignUp = useCallback(() => {
@@ -26,7 +20,10 @@ const PostSignUp = ({
         console.log('Posted successfully');
         navigation.navigate('Login');
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.log(`${err.name} : ${err.message} - Duplicate emails found`);
+        Alert.alert('Email has already been used');
+      });
   }, [email, first_name, last_name, password, navigation]);
 
   return (
@@ -36,4 +33,4 @@ const PostSignUp = ({
   );
 };
 
-export default PostSignUp;
+export default NewUser;

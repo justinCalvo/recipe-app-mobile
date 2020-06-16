@@ -16,10 +16,10 @@ app.use(
 
 app.get('/recipes', (req, res) => {
   db.query('SELECT * FROM recipes', async (err, results) => {
-    try {
-      await res.status(200).json(results.rows);
-    } catch {
-      console.error(`${err.name} : ${err.message}`);
+    if (err) {
+      res.status(400).send(`${err.name} : ${err.message}`);
+    } else {
+      res.status(200).json(results.rows);
     }
   });
 });
@@ -29,10 +29,10 @@ app.post('/users', (req, res) => {
   db.query(
     `INSERT INTO users (email, first_name, last_name, password) VALUES ('${email}', '${first_name}', '${last_name}', '${password}')`,
     async (err, results) => {
-      try {
-        await res.status(200).send(`${email} added`);
-      } catch {
-        console.error(`${err.name} : ${err.message}`);
+      if (err) {
+        res.status(409).send(`${err.name} : ${err.message}`);
+      } else {
+        res.status(200).send(`${email} added`);
       }
     },
   );

@@ -17,14 +17,14 @@
     "axios": "^0.19.2",
     "express": "^4.17.1",
     "logkitty": "^0.7.1",
+    "nodemon": "^2.0.4",
     "pg": "^8.2.1",
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-reanimated": "^1.9.0",
     "react-native-safe-area-context": "^3.0.2",
-    "react-native-screens": "^2.8.0",
-    "validator": "^13.1.1"
+    "react-native-screens": "^2.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
