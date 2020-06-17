@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Routes } from '../App.js';
+import { Routes } from '../services/Routes';
 import RecipeDetails from '../screens/RecipeDetails';
 import Login from '../screens/Login';
 import SignUp from '../screens/SignUp';

@@ -4,13 +4,14 @@ import ValidateUser from './ValidateUser';
 
 const NewUserForm = () => {
   const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
-
   const [first_name, setFirst_Name] = useState('');
   const [last_name, setLast_Name] = useState('');
   const [password, setPassword] = useState('');
-
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  const [emailError, setEmailError] = useState('');
+  const [first_NameError, setFirst_NameError] = useState('');
+  const [last_NameError, setLast_NameError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
   let firstNameRef = React.createRef();
@@ -47,6 +48,9 @@ const NewUserForm = () => {
         }}
         blurOnSubmit={false}
       />
+      {first_NameError.length ? (
+        <Text style={styles.text}>{first_NameError}</Text>
+      ) : null}
       <TextInput
         style={styles.input}
         placeholder="Last Name..."
@@ -60,6 +64,9 @@ const NewUserForm = () => {
         }}
         blurOnSubmit={false}
       />
+      {last_NameError.length ? (
+        <Text style={styles.text}>{last_NameError}</Text>
+      ) : null}
       <TextInput
         style={styles.input}
         secureTextEntry={true}
@@ -81,21 +88,23 @@ const NewUserForm = () => {
         value={confirmPassword}
         onChangeText={setConfirmPassword}
         returnKeyType="done"
-        ref={ref => (confirmPasswordRef = ref)}
         autoCorrect={false}
-        blurOnSubmit={false}
+        ref={ref => (confirmPasswordRef = ref)}
         onSubmitEditing={() => Keyboard.dismiss()}
+        blurOnSubmit={false}
       />
       {confirmPasswordError.length ? (
         <Text style={styles.text}>{confirmPasswordError}</Text>
       ) : null}
       <ValidateUser
         email={email}
-        setEmailError={setEmailError}
         first_name={first_name}
         last_name={last_name}
         password={password}
         confirmPassword={confirmPassword}
+        setEmailError={setEmailError}
+        setFirst_NameError={setFirst_NameError}
+        setLast_NameError={setLast_NameError}
         setConfirmPasswordError={setConfirmPasswordError}
       />
     </View>

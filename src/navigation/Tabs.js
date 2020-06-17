@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Routes } from '../App.js';
+import { Routes } from '../services/Routes';
 import Search from '../screens/Search';
 import Favorites from '../screens/Favorites';
 

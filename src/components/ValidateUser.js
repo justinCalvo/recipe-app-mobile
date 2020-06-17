@@ -5,11 +5,13 @@ import validator from 'validator';
 
 const ValidateUser = ({
   email,
-  setEmailError,
   first_name,
   last_name,
   password,
   confirmPassword,
+  setEmailError,
+  setFirst_NameError,
+  setLast_NameError,
   setConfirmPasswordError,
 }) => {
   const [isEmailValid, setIsEmailValid] = useState(false);
@@ -30,19 +32,27 @@ const ValidateUser = ({
 
   const validateFirst_Name = useCallback(() => {
     if (!validator.isEmpty(first_name) && validator.isAlpha(first_name)) {
+      setFirst_NameError('');
       setIsFirst_NameValid(true);
     } else {
       setIsFirst_NameValid(false);
     }
-  }, [first_name]);
+    if (!validator.isAlpha(first_name) && !validator.isEmpty(first_name)) {
+      setFirst_NameError('Please use letters only');
+    }
+  }, [first_name, setFirst_NameError]);
 
   const validateLast_Name = useCallback(() => {
     if (!validator.isEmpty(last_name) && validator.isAlpha(last_name)) {
+      setLast_NameError('');
       setIsLast_NameValid(true);
     } else {
       setIsLast_NameValid(false);
     }
-  }, [last_name]);
+    if (!validator.isAlpha(last_name) && !validator.isEmpty(last_name)) {
+      setLast_NameError('Please use letters only');
+    }
+  }, [last_name, setLast_NameError]);
 
   const validatePasswordsMatch = useCallback(() => {
     if (
